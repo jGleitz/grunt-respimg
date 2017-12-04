@@ -20,11 +20,7 @@
 /* global phantom, window, document, injectJs, overallStatus, messages, quit, fs */
 
 phantom.injectJs('phantomcomm.js');
-var	file = phantom.args[0],
-	dest = phantom.args[1],
-	width = phantom.args[2],
-	height = phantom.args[3],
-
+var file = phantom.args[0],
 	page,
 	svgdata,
 	html,
@@ -41,31 +37,16 @@ var	file = phantom.args[0],
 		var frag = window.document.createElement('div');
 		frag.innerHTML = svgdata;
 		svg = frag.querySelector('svg');
+		var svgWidth = svg.getAttribute('width') || '1';
+		svgWidth = parseFloat(svgWidth.replace('px', ''));
+		var svgHeight = svg.getAttribute('height') || '1';
+		svgHeight = parseFloat(svgHeight.replace('px', ''));
 
-		// set the viewport to the size of the image
-		page.viewportSize = {
-			width: width,
-			height: height
-		};
-
-		// open a page containing the image we just created
-		html = 'data:text/html,<!DOCTYPE html><title>svg!</title><body style="padding:0;margin:0"></body>';
-		page.open(html, function (status) {
-
-			var inject = page.evaluate(function (svgdata) {
-				document.body.innerHTML = svgdata;
-				document.querySelector('svg').setAttribute('style', 'width:100%;height:100%');
-				return true;
-			}, svgdata);
-
-			// render the page to a PNG
-			page.render(dest);
-
-			overallStatus.update(status === 'success' ? 0 : 2);
-			// done!
-			quit();
-			return;
-		});
+		var dim = {
+            width: svgWidth,
+            height: svgHeight
+        };
+        quit(dim);
 	};
 
 process();
