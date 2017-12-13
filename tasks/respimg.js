@@ -1644,7 +1644,7 @@ module.exports = function(grunt) {
 						async.each(outputFiles, function(file, callback2) {
 
 							// create a promise to optimize the SVGs
-							promise = optimizeSVGO(file, options);
+							promise = optimizeSVGO({src: [file], dest: file}, options);
 
 							// when that promise is finished, print the results onscreen
 							// (if we’re being verbose)
