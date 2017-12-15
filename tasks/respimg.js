@@ -260,7 +260,7 @@ module.exports = function(grunt) {
 				deferred = q.defer(),
 				errorMessage = 'image_optim exited with a failure status',
 				ymlPath = path.resolve(__dirname, 'lib/i_o.yml'),
-				exts = ['.gif', '.jpeg', '.jpg', '.png', '.svg'];
+				exts = ['.gif', '.jpeg', '.jpg', '.png'];
 
 			for (var i = 0; i < files.length; i++) {
 				if (exts.indexOf(path.extname(files[i]).toLowerCase()) === -1) {
