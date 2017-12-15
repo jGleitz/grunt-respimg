@@ -1451,9 +1451,10 @@ module.exports = function(grunt) {
 							grunt.log.writeln('Optimizing inputs with image_optim (pass ' + (i + 1) + ' of ' + options.optimize.input.image_optim + ')…');
 
 							// do the optimizations (with promises)
-							optimizeImage_optim(rasterFilesResolved, binPath.image_optim).then(function() {
-									next();
-								});
+							optimizeImage_optim(rasterFilesResolved, binPath.image_optim)
+								.then(function() {
+										next();
+									});
 
 						}, callback);
 
@@ -1678,6 +1679,8 @@ module.exports = function(grunt) {
 							optimizeImage_optim(outputFiles, binPath.image_optim)
 								.then(function() {
 									next();
+								}, function(error) {
+									next(error);
 								});
 
 						}, callback);
@@ -1743,7 +1746,7 @@ module.exports = function(grunt) {
 			],
 
 			function(err, results) {
-				done();
+				done(err, results);
 			});
 	});
 };
