@@ -9,3 +9,5 @@ pngcrush:
   brute: true
 pngquant:
   speed: 11
+pngout: false
+svgo: false
